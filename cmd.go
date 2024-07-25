@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"time"
 
 	Z "github.com/rwxrob/bonzai/z"
 	"github.com/rwxrob/help"
@@ -16,7 +17,7 @@ var Cmd = &Z.Cmd{
 	Usage:       "",
 	Version:     "0.0.1",
 	Description: "exo CLI",
-	Commands:    []*Z.Cmd{help.Cmd, pageCmd},
+	Commands:    []*Z.Cmd{help.Cmd, pageCmd, todayCmd},
 }
 
 var pageCmd = &Z.Cmd{
@@ -31,6 +32,21 @@ var pageCmd = &Z.Cmd{
 		page := args[0]
 		markdown := fmt.Sprintf("%s.md", page)
 		filePath := filepath.Join(os.Getenv("HOME"), "ruby", "exo", "pages", markdown)
+
+		openInVim(filePath)
+
+		return nil
+	},
+}
+
+var todayCmd = &Z.Cmd{
+	Name:     "today",
+	Summary:  "Opens today's dialy file",
+	Commands: []*Z.Cmd{help.Cmd},
+	Call: func(z *Z.Cmd, _ ...string) error {
+		today := time.Now().Format("20060102")
+		filename := fmt.Sprintf("%s-daily.md", today)
+		filePath := filepath.Join(os.Getenv("HOME"), "ruby", "exo", "daily", filename)
 
 		openInVim(filePath)
 

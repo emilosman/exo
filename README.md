@@ -6,3 +6,4 @@
 ## todo
 - [ ] search function
 - [ ] hyperlinks
+- [x] special functions: today, yesterday, etc.
