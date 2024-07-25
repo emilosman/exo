@@ -17,7 +17,7 @@ var Cmd = &Z.Cmd{
 	Usage:       "",
 	Version:     "0.0.1",
 	Description: "exo CLI",
-	Commands:    []*Z.Cmd{help.Cmd, pageCmd, todayCmd},
+	Commands:    []*Z.Cmd{help.Cmd, pageCmd, todayCmd, yesterdayCmd},
 }
 
 var pageCmd = &Z.Cmd{
@@ -45,13 +45,29 @@ var todayCmd = &Z.Cmd{
 	Commands: []*Z.Cmd{help.Cmd},
 	Call: func(z *Z.Cmd, _ ...string) error {
 		today := time.Now().Format("20060102")
-		filename := fmt.Sprintf("%s-daily.md", today)
-		filePath := filepath.Join(os.Getenv("HOME"), "ruby", "exo", "daily", filename)
-
-		openInVim(filePath)
+		openDay(today)
 
 		return nil
 	},
+}
+
+var yesterdayCmd = &Z.Cmd{
+	Name:     "yesterday",
+	Summary:  "Opens yesterday's dialy file",
+	Commands: []*Z.Cmd{help.Cmd},
+	Call: func(z *Z.Cmd, _ ...string) error {
+		yesterday := time.Now().AddDate(0, 0, -1).Format("20060102")
+		openDay(yesterday)
+
+		return nil
+	},
+}
+
+func openDay(date string) {
+	filename := fmt.Sprintf("%s-daily.md", date)
+	filePath := filepath.Join(os.Getenv("HOME"), "ruby", "exo", "daily", filename)
+
+	openInVim(filePath)
 }
 
 func openInVim(filePath string) {

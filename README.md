@@ -13,8 +13,8 @@ _"The best way to learn is to rewrite something that exists"_
 ## Todo
 - [ ] daily functions
     - [ ] openDay function: `exo day YYYYMMDD`
-    - [ ] yesterday: `exo yesterday`
     - [ ] create _today_ if it does not exist
+    - [x] yesterday: `exo yesterday`
     - [x] today: `exo today`
 - [ ] pages functions
     - [ ] list all pages: `exo pages`
