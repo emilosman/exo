@@ -16,13 +16,13 @@ var Cmd = &Z.Cmd{
 	Summary:     "exo CLI",
 	Usage:       "",
 	Version:     "0.0.1",
-	Description: "CLI helper for my exocortex",
+	Description: "CLI helper for exocortex",
 	Commands:    []*Z.Cmd{help.Cmd, pageCmd, dayCmd, todayCmd, yesterdayCmd},
 }
 
 var pageCmd = &Z.Cmd{
 	Name:     "page",
-	Summary:  "Opens page",
+	Summary:  "open a page",
 	Commands: []*Z.Cmd{help.Cmd},
 	Call: func(z *Z.Cmd, args ...string) error {
 		if len(args) == 0 {
@@ -41,7 +41,7 @@ var pageCmd = &Z.Cmd{
 
 var dayCmd = &Z.Cmd{
 	Name:     "day",
-	Summary:  "Opens a daily file",
+	Summary:  "open a daily file",
 	Commands: []*Z.Cmd{help.Cmd},
 	Call: func(z *Z.Cmd, args ...string) error {
 		if len(args) == 0 {
@@ -57,7 +57,7 @@ var dayCmd = &Z.Cmd{
 
 var todayCmd = &Z.Cmd{
 	Name:     "today",
-	Summary:  "Opens today's dialy file",
+	Summary:  "open today's daily file",
 	Commands: []*Z.Cmd{help.Cmd},
 	Call: func(z *Z.Cmd, _ ...string) error {
 		today := time.Now().Format("20060102")
@@ -69,7 +69,7 @@ var todayCmd = &Z.Cmd{
 
 var yesterdayCmd = &Z.Cmd{
 	Name:     "yesterday",
-	Summary:  "Opens yesterday's dialy file",
+	Summary:  "open yesterday's daily file",
 	Commands: []*Z.Cmd{help.Cmd},
 	Call: func(z *Z.Cmd, _ ...string) error {
 		yesterday := time.Now().AddDate(0, 0, -1).Format("20060102")
@@ -87,7 +87,6 @@ func openDay(date string) {
 }
 
 func openInVim(filePath string) {
-	fmt.Println("Opening file in Vim:", filePath)
 	cmd := exec.Command("vim", filePath)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
