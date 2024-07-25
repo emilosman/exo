@@ -15,7 +15,7 @@ _"The best way to learn is to rewrite something that exists"_
     - [ ] openDay function: `exo day YYYYMMDD`
     - [ ] yesterday: `exo yesterday`
     - [ ] create _today_ if it does not exist
-    - [x] today: exo today`
+    - [x] today: `exo today`
 - [ ] pages functions
     - [ ] list all pages: `exo pages`
     - [ ] search, suggest page when not found if similar exists: `exo page ...`
