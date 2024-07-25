@@ -16,8 +16,8 @@ var Cmd = &Z.Cmd{
 	Summary:     "exo CLI",
 	Usage:       "",
 	Version:     "0.0.1",
-	Description: "exo CLI",
-	Commands:    []*Z.Cmd{help.Cmd, pageCmd, todayCmd, yesterdayCmd},
+	Description: "CLI helper for my exocortex",
+	Commands:    []*Z.Cmd{help.Cmd, pageCmd, dayCmd, todayCmd, yesterdayCmd},
 }
 
 var pageCmd = &Z.Cmd{
@@ -34,6 +34,22 @@ var pageCmd = &Z.Cmd{
 		filePath := filepath.Join(os.Getenv("HOME"), "ruby", "exo", "pages", markdown)
 
 		openInVim(filePath)
+
+		return nil
+	},
+}
+
+var dayCmd = &Z.Cmd{
+	Name:     "day",
+	Summary:  "Opens a daily file",
+	Commands: []*Z.Cmd{help.Cmd},
+	Call: func(z *Z.Cmd, args ...string) error {
+		if len(args) == 0 {
+			return fmt.Errorf("no page specified")
+		}
+
+		day := args[0]
+		openDay(day)
 
 		return nil
 	},
