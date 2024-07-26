@@ -11,8 +11,8 @@ _"The best way to learn is to rewrite something that exists"_
 - [Bonzai and how to create a personal CLI to rule them all](https://dev.to/cherryramatis/bonzai-and-how-to-create-a-personal-cli-to-rule-them-all-1bnl)
 
 ## Todo
-- [ ] daily functions
-    - [ ] create _today_ if it does not exist
+- [x] daily functions
+    - [x] create _today_ if it does not exist
     - [x] openDay function: `exo day YYYYMMDD`
     - [x] yesterday: `exo yesterday`
     - [x] today: `exo today`
