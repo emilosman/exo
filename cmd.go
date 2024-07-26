@@ -2,6 +2,7 @@ package exo
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -61,6 +62,7 @@ var todayCmd = &Z.Cmd{
 	Commands: []*Z.Cmd{help.Cmd},
 	Call: func(z *Z.Cmd, _ ...string) error {
 		today := time.Now().Format("20060102")
+		createToday()
 		openDay(today)
 
 		return nil
@@ -79,6 +81,44 @@ var yesterdayCmd = &Z.Cmd{
 	},
 }
 
+func createToday() {
+	// Define the template file path
+	templateFilePath := filepath.Join(os.Getenv("HOME"), "ruby", "exo", "daily", "daily-template.md")
+
+	// Get the current date
+	currentTime := time.Now()
+	dateString := currentTime.Format("20060102")
+	dayName := currentTime.Weekday().String()
+
+	// Create the new filename
+	newFileName := fmt.Sprintf("%s-daily.md", dateString)
+	newFilePath := filepath.Join(os.Getenv("HOME"), "ruby", "exo", "daily", newFileName)
+
+	// Check if the new file already exists
+	if _, err := os.Stat(newFilePath); err == nil {
+		return
+	}
+
+	// Read the template file
+	templateContent, err := ioutil.ReadFile(templateFilePath)
+	if err != nil {
+		fmt.Println("Error reading template file:", err)
+		return
+	}
+
+	// Create the new content
+	newContent := fmt.Sprintf("# %s %s\n\n%s", dateString, dayName, templateContent)
+
+	// Write the new content to the new file
+	err = ioutil.WriteFile(newFilePath, []byte(newContent), 0644)
+	if err != nil {
+		fmt.Println("Error writing new file:", err)
+		return
+	}
+
+	fmt.Println("New daily file created.")
+}
+
 func openDay(date string) {
 	filename := fmt.Sprintf("%s-daily.md", date)
 	filePath := filepath.Join(os.Getenv("HOME"), "ruby", "exo", "daily", filename)
@@ -87,6 +127,7 @@ func openDay(date string) {
 }
 
 func openInVim(filePath string) {
+	fmt.Println("exo:", filePath)
 	cmd := exec.Command("vim", filePath)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
