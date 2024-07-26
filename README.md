@@ -1,7 +1,7 @@
 # exo-cli
 _"The best way to learn is to rewrite something that exists"_
 
-- CLI helper for editing my _exocortex_ personal notes archive
+- CLI helper for editing my [exocortex](https://en.wikipedia.org/wiki/Exobrain)
 
 ## Bonzai references
 This CLI is built with [rwxrob](https://github.com/rwxrob)'s Bonzai template.  
