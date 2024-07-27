@@ -9,19 +9,23 @@ Here are some useful links that helped me understand how to use it:
 
 - [bonzai repo](https://github.com/rwxrob/bonzai)
 - [z repo](https://github.com/rwxrob/z)
+- [z repo main.go](https://github.com/rwxrob/z/blob/main/main.go)
 - [example template](https://github.com/rwxrob/bonzai-example)
 - [bonzai help](https://github.com/rwxrob/help)
 - [Bonzai and how to create a personal CLI to rule them all](https://dev.to/cherryramatis/bonzai-and-how-to-create-a-personal-cli-to-rule-them-all-1bnl)
 
 ## Todo
 - [ ] pages functions
-    - [ ] list all pages: `exo pages`
     - [ ] search, suggest page when not found if similar exists: `exo page ...`
     - [ ] alias command `p = pages`
+    - [x] list all pages: `exo pages`
 - [ ] config file
     - [ ] set path for _exo_ folder
 - [ ] hyperlinks, references
 - [ ] `exo init`
+- [ ] other functionality
+    - [ ] github sync
+    - [ ] go build
 
 ## Done
 - [x] daily functions

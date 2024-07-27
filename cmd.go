@@ -18,7 +18,7 @@ var Cmd = &Z.Cmd{
 	Usage:       "",
 	Version:     "0.0.1",
 	Description: "CLI helper for exocortex",
-	Commands:    []*Z.Cmd{help.Cmd, pageCmd, dayCmd, todayCmd, yesterdayCmd},
+	Commands:    []*Z.Cmd{help.Cmd, pageCmd, listPagesCmd, dayCmd, todayCmd, yesterdayCmd},
 }
 
 var pageCmd = &Z.Cmd{
@@ -35,6 +35,25 @@ var pageCmd = &Z.Cmd{
 		filePath := filepath.Join(os.Getenv("HOME"), "ruby", "exo", "pages", markdown)
 
 		openInVim(filePath)
+
+		return nil
+	},
+}
+
+var listPagesCmd = &Z.Cmd{
+	Name:     "list",
+	Summary:  "list pages",
+	Commands: []*Z.Cmd{help.Cmd},
+	Call: func(z *Z.Cmd, _ ...string) error {
+		filePath := filepath.Join(os.Getenv("HOME"), "ruby", "exo", "pages")
+		cmd := exec.Command("ls", filePath)
+		cmd.Stdin = os.Stdin
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+
+		if err := cmd.Run(); err != nil {
+			fmt.Println("Error listing pages:", err)
+		}
 
 		return nil
 	},
