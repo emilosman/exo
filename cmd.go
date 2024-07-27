@@ -18,7 +18,7 @@ var Cmd = &Z.Cmd{
 	Usage:       "",
 	Version:     "0.0.1",
 	Description: "CLI helper for exocortex",
-	Commands:    []*Z.Cmd{help.Cmd, pageCmd, listPagesCmd, dayCmd, todayCmd, yesterdayCmd},
+	Commands:    []*Z.Cmd{help.Cmd, pageCmd, listPagesCmd, dayCmd, todayCmd, yesterdayCmd, syncCmd},
 }
 
 var pageCmd = &Z.Cmd{
@@ -100,6 +100,45 @@ var yesterdayCmd = &Z.Cmd{
 	},
 }
 
+var syncCmd = &Z.Cmd{
+	Name:     "sync",
+	Summary:  "git sync exo",
+	Commands: []*Z.Cmd{help.Cmd},
+	Call: func(z *Z.Cmd, _ ...string) error {
+		repoDir := filepath.Join(os.Getenv("HOME"), "ruby", "exo")
+
+		// Define git commands
+		gitCommands := [][]string{
+			{"git", "add", "."},
+			{"git", "commit", "-m", "update"},
+			{"git", "pull", "--rebase", "kicomp", "master"},
+			{"git", "push", "kicomp", "master"},
+		}
+
+		// Execute the git commands in the specified directory
+		for _, cmd := range gitCommands {
+			if err := runCommand(repoDir, cmd[0], cmd[1:]...); err != nil {
+				return fmt.Errorf("failed to run command %v: %w", cmd, err)
+			}
+		}
+
+		// Define rsync command
+		rsyncArgs := []string{
+			"-auhv", "--dry-run", "--delete", "--no-perms", "--no-times", "--exclude=.*",
+			"-e", "ssh -p 920",
+			filepath.Join(os.Getenv("HOME"), "ruby", "exo") + "/",
+			"emil@kicomp.xyz:/mnt/md0/exo/",
+		}
+
+		// Execute rsync command
+		if err := runCommand("", "rsync", rsyncArgs...); err != nil {
+			return fmt.Errorf("failed to run rsync command: %w", err)
+		}
+
+		return nil
+	},
+}
+
 func createToday() {
 	// Define the template file path
 	templateFilePath := filepath.Join(os.Getenv("HOME"), "ruby", "exo", "daily", "daily-template.md")
@@ -155,4 +194,14 @@ func openInVim(filePath string) {
 	if err := cmd.Run(); err != nil {
 		fmt.Println("Error opening file in Vim:", err)
 	}
+}
+
+func runCommand(dir string, command string, args ...string) error {
+	cmd := exec.Command(command, args...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if dir != "" {
+		cmd.Dir = dir
+	}
+	return cmd.Run()
 }
