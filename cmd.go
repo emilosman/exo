@@ -124,7 +124,7 @@ var syncCmd = &Z.Cmd{
 
 		// Define rsync command
 		rsyncArgs := []string{
-			"-auhv", "--dry-run", "--delete", "--no-perms", "--no-times", "--exclude=.*",
+			"-auhv", "--delete", "--no-perms", "--no-times", "--exclude=.*",
 			"-e", "ssh -p 920",
 			filepath.Join(os.Getenv("HOME"), "ruby", "exo") + "/",
 			"emil@kicomp.xyz:/mnt/md0/exo/",
