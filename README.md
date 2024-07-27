@@ -26,6 +26,7 @@ Here are some useful links that helped me understand how to use it:
 - [ ] other functionality
     - [ ] github sync
     - [ ] go build
+- [ ] exo secret vault
 
 ## Done
 - [x] daily functions
