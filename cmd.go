@@ -111,7 +111,6 @@ var syncCmd = &Z.Cmd{
 		gitCommands := [][]string{
 			{"git", "add", "."},
 			{"git", "commit", "-m", "update"},
-			{"git", "pull", "--rebase", "kicomp", "master"},
 			{"git", "push", "kicomp", "master"},
 		}
 
