@@ -1,4 +1,4 @@
-# exo-cli
+# exo
 _"The best way to learn is to rewrite something that exists"_
 
 - CLI helper for my [exocortex](https://en.wikipedia.org/wiki/Exobrain)
